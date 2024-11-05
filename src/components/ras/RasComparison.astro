@@ -1,0 +1,71 @@
+---
+interface Hond {
+  ras: string;
+  score: number;
+  geschiktKinderen: number;
+  intelligentieRang: number;
+  levensverwachting: number;
+  levenskosten: number;
+}
+
+interface Props {
+  currentRas: Hond;
+  vergelijkbareRassen: Hond[];
+}
+
+const { currentRas, vergelijkbareRassen } = Astro.props;
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('nl-BE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
+---
+
+<section class="mt-16">
+  <h2 class="text-2xl font-bold mb-6">Vergelijking met Vergelijkbare Rassen</h2>
+  
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ras</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kindvriendelijk</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Intelligentie</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Levensverwachting</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Levenskosten</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <!-- Current breed -->
+        <tr class="bg-blue-50">
+          <td class="px-6 py-4 whitespace-nowrap font-medium text-blue-600">{currentRas.ras}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{currentRas.score}/5</td>
+          <td class="px-6 py-4 whitespace-nowrap">{currentRas.geschiktKinderen}/5</td>
+          <td class="px-6 py-4 whitespace-nowrap">#{currentRas.intelligentieRang}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{currentRas.levensverwachting} jaar</td>
+          <td class="px-6 py-4 whitespace-nowrap">{formatCurrency(currentRas.levenskosten)}</td>
+        </tr>
+        
+        <!-- Comparable breeds -->
+        {vergelijkbareRassen.map(hond => (
+          <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <a href={`/ras/${hond.ras.toLowerCase().replace(/\s+/g, '-')}`} class="text-blue-600 hover:underline">
+                {hond.ras}
+              </a>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">{hond.score}/5</td>
+            <td class="px-6 py-4 whitespace-nowrap">{hond.geschiktKinderen}/5</td>
+            <td class="px-6 py-4 whitespace-nowrap">#{hond.intelligentieRang}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{hond.levensverwachting} jaar</td>
+            <td class="px-6 py-4 whitespace-nowrap">{formatCurrency(hond.levenskosten)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>

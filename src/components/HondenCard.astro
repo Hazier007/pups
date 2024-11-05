@@ -1,0 +1,69 @@
+---
+interface Props {
+  ras: string;
+  type: string;
+  intelligentie: string;
+  grootte: string;
+  score: number;
+  geschiktKinderen: number;
+  href: string;
+}
+
+const { ras, type, intelligentie, grootte, score, geschiktKinderen, href } = Astro.props;
+
+const vertaalType = (type: string) => {
+  const vertalingen = {
+    'sporting': 'Sport',
+    'working': 'Werk',
+    'terrier': 'Terriër',
+    'hound': 'Jacht',
+    'toy': 'Gezelschaps'
+  };
+  return vertalingen[type] || type;
+};
+---
+
+<a href={href} class="group block bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+  <div class="p-6">
+    <h3 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">{ras}</h3>
+    <div class="space-y-3 text-gray-600">
+      <p><span class="font-semibold">Type:</span> {vertaalType(type)}</p>
+      <p><span class="font-semibold">Intelligentie:</span> {intelligentie}</p>
+      <p><span class="font-semibold">Grootte:</span> {grootte}</p>
+      
+      <div class="mt-6 space-y-4">
+        <div class="flex items-center gap-3">
+          <span class="font-semibold min-w-32">Algemene Score:</span>
+          <div class="flex">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                class={`w-6 h-6 ${i < score ? 'text-yellow-400' : 'text-gray-200'}`}
+                fill="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <span class="font-semibold min-w-32">Kindvriendelijk:</span>
+          <div class="flex">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                class={`w-6 h-6 ${i < geschiktKinderen ? 'text-blue-500' : 'text-gray-200'}`}
+                fill="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

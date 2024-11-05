@@ -1,0 +1,80 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import RasHero from '../../components/ras/RasHero.astro';
+import RasStats from '../../components/ras/RasStats.astro';
+import RasDescription from '../../components/ras/RasDescription.astro';
+import RasKenmerken from '../../components/ras/RasKenmerken.astro';
+import RasComparison from '../../components/ras/RasComparison.astro';
+import RasFAQ from '../../components/ras/RasFAQ.astro';
+import processedData from '../../data/processedHonden.json';
+
+export function getStaticPaths() {
+  return processedData.map((hond) => ({
+    params: { ras: hond.ras.toLowerCase().replace(/\s+/g, '-') },
+    props: { 
+      hond,
+      vergelijkbareRassen: processedData
+        .filter(h => h.type === hond.type && h.ras !== hond.ras)
+        .slice(0, 3)
+    },
+  }));
+}
+
+const { hond, vergelijkbareRassen } = Astro.props;
+---
+
+<Layout title={`${hond.ras} - HondenPups.be`}>
+  <Header />
+  <RasHero ras={hond.ras} type={hond.type} />
+  
+  <main class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Quick Stats Section -->
+      <RasStats 
+        score={hond.score}
+        geschiktKinderen={hond.geschiktKinderen}
+        intelligentieRang={hond.intelligentieRang}
+        levensverwachting={hond.levensverwachting}
+        levenskosten={hond.levenskosten}
+      />
+
+      <!-- Main Content -->
+      <div class="mt-12 bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="p-8 lg:p-12">
+          <RasDescription 
+            ras={hond.ras}
+            type={hond.type}
+            description={hond.description}
+            grootte={hond.grootte}
+            intelligentie={hond.intelligentie}
+            aandoeningen={hond.aandoeningen}
+          />
+
+          <div class="mt-12">
+            <RasComparison 
+              currentRas={hond}
+              vergelijkbareRassen={vergelijkbareRassen}
+            />
+          </div>
+
+          <div class="mt-12">
+            <RasKenmerken 
+              type={hond.type}
+              grootte={hond.grootte}
+              intelligentie={hond.intelligentie}
+              levensverwachting={hond.levensverwachting}
+            />
+          </div>
+
+          <div class="mt-12">
+            <RasFAQ ras={hond.ras} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

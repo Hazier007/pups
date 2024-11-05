@@ -1,0 +1,31 @@
+---
+interface Props {
+  categories: string[];
+}
+
+const { categories } = Astro.props;
+
+const vertaalCategorie = (categorie: string) => {
+  const vertalingen = {
+    'sporting': 'Sport',
+    'working': 'Werk',
+    'terrier': 'Terriër',
+    'hound': 'Jacht',
+    'toy': 'Gezelschaps'
+  };
+  return vertalingen[categorie] || categorie;
+};
+---
+
+<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+  <div class="flex flex-wrap gap-4">
+    <button class="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors">
+      Alle Rassen
+    </button>
+    {categories.map(category => (
+      <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">
+        {vertaalCategorie(category)}
+      </button>
+    ))}
+  </div>
+</div>

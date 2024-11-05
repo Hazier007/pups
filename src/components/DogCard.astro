@@ -1,0 +1,56 @@
+---
+interface Props {
+  breed: string;
+  type: string;
+  intelligence: string;
+  size: string;
+  score: number;
+  suitableForKids: number;
+  href: string;
+}
+
+const { breed, type, intelligence, size, score, suitableForKids, href } = Astro.props;
+---
+
+<a href={href} class="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+  <div class="p-6">
+    <h3 class="text-xl font-semibold mb-2">{breed}</h3>
+    <div class="space-y-2 text-gray-600">
+      <p><span class="font-medium">Type:</span> {type}</p>
+      <p><span class="font-medium">Intelligence:</span> {intelligence}</p>
+      <p><span class="font-medium">Size:</span> {size}</p>
+      <div class="mt-4">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="font-medium">Overall Score:</span>
+          <div class="flex">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                class={`w-5 h-5 ${i < score ? 'text-yellow-400' : 'text-gray-300'}`}
+                fill="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-medium">Kid Friendly:</span>
+          <div class="flex">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                class={`w-5 h-5 ${i < suitableForKids ? 'text-blue-400' : 'text-gray-300'}`}
+                fill="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

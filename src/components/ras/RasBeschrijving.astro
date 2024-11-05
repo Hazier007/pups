@@ -1,0 +1,16 @@
+---
+interface Props {
+  beschrijving: string;
+}
+
+const { beschrijving } = Astro.props;
+---
+
+<div class="prose prose-lg max-w-none mb-12">
+  <h2 class="text-3xl font-bold mb-6">Over dit ras</h2>
+  <div class="text-gray-700 space-y-4">
+    {beschrijving.split('\n').map(paragraph => (
+      <p class="leading-relaxed">{paragraph.trim()}</p>
+    ))}
+  </div>
+</div>

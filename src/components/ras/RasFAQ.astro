@@ -1,0 +1,43 @@
+---
+interface Props {
+  ras: string;
+}
+
+const { ras } = Astro.props;
+
+const faqs = [
+  {
+    vraag: `Is de ${ras} geschikt voor een appartement?`,
+    antwoord: `Dit hangt af van verschillende factoren, waaronder de grootte en energie van de hond. Het is belangrijk om voldoende beweging en mentale stimulatie te bieden, ongeacht de woonsituatie.`
+  },
+  {
+    vraag: `Hoeveel beweging heeft een ${ras} nodig?`,
+    antwoord: `De exacte hoeveelheid beweging hangt af van de leeftijd en gezondheid van de hond, maar over het algemeen hebben ze dagelijkse wandelingen en speelsessies nodig voor hun fysieke en mentale welzijn.`
+  },
+  {
+    vraag: `Zijn ${ras}s makkelijk op te voeden?`,
+    antwoord: `De opvoedbaarheid hangt af van verschillende factoren, waaronder vroege socialisatie en consistente training. Positieve bekrachtiging werkt meestal het beste.`
+  },
+  {
+    vraag: `Wat zijn de meest voorkomende gezondheidsproblemen bij ${ras}s?`,
+    antwoord: `Zoals bij alle rassen is het belangrijk om regelmatig de dierenarts te bezoeken voor controles en preventieve zorg. Specifieke gezondheidsproblemen kunnen variëren.`
+  },
+  {
+    vraag: `Hoeveel kost een ${ras} per maand aan onderhoud?`,
+    antwoord: `De maandelijkse kosten omvatten voeding, verzorging, dierenartsbezoeken en verzekering. Het exacte bedrag hangt af van verschillende factoren en individuele behoeften.`
+  }
+];
+---
+
+<section class="mt-16">
+  <h2 class="text-2xl font-bold mb-6">Veelgestelde Vragen over de {ras}</h2>
+  
+  <div class="space-y-4">
+    {faqs.map(faq => (
+      <div class="bg-gray-50 rounded-lg p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">{faq.vraag}</h3>
+        <p class="text-gray-600">{faq.antwoord}</p>
+      </div>
+    ))}
+  </div>
+</section>

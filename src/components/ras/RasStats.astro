@@ -1,0 +1,78 @@
+---
+interface Props {
+  score: number;
+  geschiktKinderen: number;
+  intelligentieRang: number;
+  levensverwachting: number;
+  levenskosten: number;
+}
+
+const { score, geschiktKinderen, intelligentieRang, levensverwachting, levenskosten } = Astro.props;
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('nl-BE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
+
+const kostenPerDag = Math.round(levenskosten / (levensverwachting * 365));
+const kostenPerJaar = Math.round(levenskosten / levensverwachting);
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+  <!-- Algemene Score -->
+  <div class="bg-white rounded-xl shadow-md p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-2">Algemene Score</h3>
+    <div class="flex items-center">
+      <div class="flex-1">
+        <div class="h-2 bg-gray-200 rounded-full">
+          <div class="h-2 bg-blue-600 rounded-full" style={`width: ${(score / 5) * 100}%`}></div>
+        </div>
+      </div>
+      <span class="ml-3 text-2xl font-bold text-blue-600">{score}/5</span>
+    </div>
+  </div>
+
+  <!-- Geschikt voor Kinderen -->
+  <div class="bg-white rounded-xl shadow-md p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-2">Kindvriendelijk</h3>
+    <div class="flex items-center">
+      <div class="flex-1">
+        <div class="h-2 bg-gray-200 rounded-full">
+          <div class="h-2 bg-green-500 rounded-full" style={`width: ${(geschiktKinderen / 5) * 100}%`}></div>
+        </div>
+      </div>
+      <span class="ml-3 text-2xl font-bold text-green-500">{geschiktKinderen}/5</span>
+    </div>
+  </div>
+
+  <!-- Intelligentie Ranking -->
+  <div class="bg-white rounded-xl shadow-md p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-2">Intelligentie</h3>
+    <div class="text-center">
+      <span class="text-2xl font-bold text-purple-600">#{intelligentieRang}</span>
+      <p class="text-sm text-gray-500 mt-1">van 138 rassen</p>
+    </div>
+  </div>
+
+  <!-- Levensverwachting -->
+  <div class="bg-white rounded-xl shadow-md p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-2">Levensverwachting</h3>
+    <div class="text-center">
+      <span class="text-2xl font-bold text-amber-600">{levensverwachting}</span>
+      <span class="text-lg text-amber-600 font-medium"> jaar</span>
+    </div>
+  </div>
+
+  <!-- Kosten -->
+  <div class="bg-white rounded-xl shadow-md p-6">
+    <h3 class="text-lg font-medium text-gray-900 mb-2">Kosten</h3>
+    <div class="space-y-2">
+      <p class="text-sm text-gray-500">Per dag: <span class="font-semibold text-gray-900">{formatCurrency(kostenPerDag)}</span></p>
+      <p class="text-sm text-gray-500">Per jaar: <span class="font-semibold text-gray-900">{formatCurrency(kostenPerJaar)}</span></p>
+      <p class="text-sm text-gray-500">Levensduur: <span class="font-semibold text-gray-900">{formatCurrency(levenskosten)}</span></p>
+    </div>
+  </div>
+</div>

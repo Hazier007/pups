@@ -1,0 +1,39 @@
+---
+const features = [
+  {
+    title: "Uitgebreide Informatie",
+    description: "Gedetailleerde informatie over elk hondenras, inclusief karakter, verzorging en gezondheid.",
+    icon: "📚"
+  },
+  {
+    title: "Geschiktheid voor Gezinnen",
+    description: "Ontdek welke honden het beste passen bij gezinnen met kinderen.",
+    icon: "👨‍👩‍👧‍👦"
+  },
+  {
+    title: "Kostenoverzicht",
+    description: "Inzicht in de verwachte kosten voor voeding, verzorging en medische zorg.",
+    icon: "💰"
+  },
+  {
+    title: "Expert Advies",
+    description: "Professioneel advies om de juiste keuze te maken voor jouw situatie.",
+    icon: "🎓"
+  }
+];
+---
+
+<section class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-center mb-16">Waarom HondenPups.be?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {features.map(feature => (
+        <div class="text-center">
+          <div class="text-4xl mb-4">{feature.icon}</div>
+          <h3 class="text-xl font-semibold mb-3">{feature.title}</h3>
+          <p class="text-gray-600">{feature.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

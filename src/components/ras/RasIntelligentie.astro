@@ -1,0 +1,15 @@
+---
+interface Props {
+  intelligentieRang: number;
+}
+
+const { intelligentieRang } = Astro.props;
+---
+
+<div class="bg-blue-50 rounded-xl p-6">
+  <h2 class="text-2xl font-semibold mb-4">Intelligentie Ranking</h2>
+  <p class="text-4xl font-bold text-blue-600 mb-2">#{intelligentieRang}</p>
+  <p class="text-gray-600">
+    van de 138 gerangschikte hondenrassen
+  </p>
+</div>

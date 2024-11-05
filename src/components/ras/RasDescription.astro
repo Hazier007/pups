@@ -1,0 +1,54 @@
+---
+interface Props {
+  ras: string;
+  type: string;
+  description: string;
+  grootte: string;
+  intelligentie: string;
+  aandoeningen: string;
+}
+
+const { ras, type, description, grootte, intelligentie, aandoeningen } = Astro.props;
+
+const sections = [
+  {
+    title: "1. Algemene Informatie",
+    content: description
+  },
+  {
+    title: "2. Uiterlijk",
+    content: `De ${ras} is een ${grootte} hond met karakteristieke eigenschappen die passen bij het ${type} type.`
+  },
+  {
+    title: "3. Temperament en Gedrag",
+    content: `Deze hond staat bekend om zijn ${intelligentie.toLowerCase()} intelligentie, wat zich uit in ${
+      intelligentie === 'Brightest' ? 'een uitzonderlijk snel leervermogen en grote werkwilligheid' :
+      intelligentie === 'Excellent' ? 'een zeer goed leervermogen en sterke focus' :
+      intelligentie === 'Above average' ? 'een bovengemiddeld leervermogen en goede werkhouding' :
+      intelligentie === 'Average' ? 'een normaal leervermogen en stabiele werkhouding' :
+      'een eigen tempo van leren en een unieke benadering van training'
+    }.`
+  },
+  {
+    title: "4. Gezondheid en Levensverwachting",
+    content: aandoeningen === 'geen' 
+      ? `De ${ras} staat bekend om zijn robuuste gezondheid en heeft geen specifieke erfelijke aandoeningen.`
+      : `Bij de ${ras} komen de volgende gezondheidsproblemen voor: ${aandoeningen}.`
+  }
+];
+---
+
+<article class="prose prose-lg max-w-none">
+  <h2 class="text-3xl font-bold mb-8">Over de {ras}</h2>
+  
+  {sections.map(section => (
+    <div class="mb-8">
+      <h3 class="text-2xl font-semibold mb-4">{section.title}</h3>
+      <div class="text-gray-700 space-y-4">
+        {section.content.split('\n').map(paragraph => (
+          <p class="leading-relaxed">{paragraph.trim()}</p>
+        ))}
+      </div>
+    </div>
+  ))}
+</article>

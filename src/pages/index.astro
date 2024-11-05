@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HondenCard from '../components/HondenCard.astro';
+import FilterBar from '../components/FilterBar.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Features from '../components/Features.astro';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import Footer from '../components/Footer.astro';
+import processedData from '../data/processedHonden.json';
+
+const categorieën = [...new Set(processedData.map(hond => hond.type))];
+---
+
+<Layout title="HondenPups.be - Vind jouw perfecte hond">
+  <Header />
+  <Hero />
+  <main class="pt-16">
+    <Features />
+    <CategoryGrid />
+    
+    <section class="bg-gray-50 py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12">Ontdek Alle Hondenrassen</h2>
+        <FilterBar categories={categorieën} />
+        
+        <div class="grid gap-12 mt-12">
+          {categorieën.map(categorie => (
+            <section>
+              <h2 class="text-3xl font-bold mb-8 text-gray-800 capitalize border-b pb-4">
+                {categorie === 'sporting' ? 'Sport' : 
+                 categorie === 'working' ? 'Werk' :
+                 categorie === 'terrier' ? 'Terriër' :
+                 categorie === 'hound' ? 'Jacht' :
+                 categorie === 'toy' ? 'Gezelschaps' : categorie} honden
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {processedData
+                  .filter(hond => hond.type === categorie)
+                  .map(hond => (
+                    <HondenCard 
+                      ras={hond.ras}
+                      type={hond.type}
+                      intelligentie={hond.intelligentie}
+                      grootte={hond.grootte}
+                      score={hond.score}
+                      geschiktKinderen={hond.geschiktKinderen}
+                      href={`/ras/${hond.ras.toLowerCase().replace(/\s+/g, '-')}`}
+                    />
+                  ))
+                }
+              </div>
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hero-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+</style>

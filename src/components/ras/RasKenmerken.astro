@@ -1,0 +1,45 @@
+---
+interface Props {
+  type: string;
+  grootte: string;
+  intelligentie: string;
+  levensverwachting: number;
+}
+
+const { type, grootte, intelligentie, levensverwachting } = Astro.props;
+
+const vertaalType = (type: string) => {
+  const vertalingen = {
+    'sporting': 'Sport',
+    'working': 'Werk',
+    'terrier': 'Terriër',
+    'hound': 'Jacht',
+    'toy': 'Gezelschaps',
+    'herding': 'Herders',
+    'non-sporting': 'Niet-sport'
+  };
+  return vertalingen[type] || type;
+};
+---
+
+<div class="bg-gray-50 rounded-xl p-6 mb-8">
+  <h2 class="text-2xl font-semibold mb-6">Kenmerken</h2>
+  <dl class="grid grid-cols-1 gap-4">
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <dt class="font-medium text-gray-600">Type</dt>
+      <dd class="text-gray-900">{vertaalType(type)}</dd>
+    </div>
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <dt class="font-medium text-gray-600">Grootte</dt>
+      <dd class="text-gray-900 capitalize">{grootte}</dd>
+    </div>
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <dt class="font-medium text-gray-600">Intelligentie</dt>
+      <dd class="text-gray-900">{intelligentie}</dd>
+    </div>
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <dt class="font-medium text-gray-600">Levensverwachting</dt>
+      <dd class="text-gray-900">{levensverwachting} jaar</dd>
+    </div>
+  </dl>
+</div>
